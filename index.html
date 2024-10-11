@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
+  <title>我的网站</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,19 +32,19 @@
 </head>
 <body>
   <header>
-    <h1 id="header-text">Is There A Hurricane?</h1>
+    <h1 id="header-text">有飓风吗？</h1>
   </header>
   <section>
     <p id="section-text">
-      <b>Yes.</b><br><br><br><br>
-      Find Shelter Probably<br><br>
+      <b>是的.</b><br><br><br><br>
+      可能需要寻找庇护<br><br>
       <img src="scared.jpg" alt="pic">
     </p>
-    <button onclick="toggleLanguage()">Switch to Chinese</button>
+    <button onclick="toggleLanguage()">Switch to English</button>
   </section>
 
   <script>
-    let isEnglish = true;
+    let isEnglish = false; // Start with Chinese
 
     function toggleLanguage() {
       const headerText = document.getElementById('header-text');
@@ -55,13 +55,13 @@
         // Change text to Chinese
         headerText.innerText = '有飓风吗？';
         sectionText.innerHTML = '<b>是的.</b><br><br><br><br>可能需要寻找庇护<br><br><img src="scared.jpg" alt="pic">';
-        button.innerText = '切换为英文';
+        button.innerText = 'Switch to English';
         isEnglish = false;
       } else {
-        // Change text back to English
+        // Change text to English
         headerText.innerText = 'Is There A Hurricane?';
         sectionText.innerHTML = '<b>Yes.</b><br><br><br><br>Find Shelter Probably<br><br><img src="scared.jpg" alt="pic">';
-        button.innerText = 'Switch to Chinese';
+        button.innerText = '切换为中文';
         isEnglish = true;
       }
     }
