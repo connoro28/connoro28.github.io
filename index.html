@@ -23,11 +23,12 @@
       text-align: center;
     }
     button {
-      color: white;
       margin-top: 20px;
       font-size: 18px;
       padding: 10px 20px;
       cursor: pointer;
+      opacity: 0; /* Make the button invisible */
+      pointer-events: none; /* Prevent interaction if desired */
     }
   </style>
 </head>
@@ -41,7 +42,7 @@
       可能需要寻找庇护<br><br>
       <img src="scared.jpg" alt="pic">
     </p>
-    <button onclick="toggleLanguage()">Switch to English</button>
+    <button id="language-button" onclick="toggleLanguage()">Switch to English</button>
   </section>
 
   <script>
@@ -50,7 +51,7 @@
     function toggleLanguage() {
       const headerText = document.getElementById('header-text');
       const sectionText = document.getElementById('section-text');
-      const button = document.querySelector('button');
+      const button = document.getElementById('language-button');
       
       if (isEnglish) {
         // Change text to Chinese
