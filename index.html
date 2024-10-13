@@ -12,14 +12,14 @@
       padding: 0;
       position: relative;
       height: 100vh;
-      overflow: hidden; /* Prevents scrolling when the video takes up the entire screen */
+      overflow: hidden;
     }
     header {
       color: Black;
       padding: 10px 0;
       text-align: center;
       position: relative;
-      z-index: 10; /* Keep the header in front */
+      z-index: 10;
     }
     section {
       color: red;
@@ -27,13 +27,13 @@
       padding: 10px 0;
       text-align: center;
       position: relative;
-      z-index: 10; /* Keep the text in front of the video */
+      z-index: 10;
     }
     button {
       font-size: 18px;
       padding: 10px 20px;
       cursor: pointer;
-      opacity: 0; /* Make the button invisible but interactive */
+      opacity: 0;
       position: absolute;
     }
     #show-webcam-button {
@@ -42,20 +42,22 @@
       padding: 10px 20px;
       cursor: pointer;
       margin: 20px;
-      z-index: 10; /* Keep the button in front of the video */
+      z-index: 10;
     }
     video {
-      display: none; /* Initially hide the webcam feed */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: 1; /* Put the video behind all other content */
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40vw; /* Set the width of the webcam feed */
+      height: auto;
+      z-index: 15; /* Put the video in front of the black background */
+      border: 5px solid white;
+      box-shadow: 0 0 10px white;
     }
     #flash-text {
-      display: none; /* Initially hide the flashing text */
+      display: none;
       position: fixed;
       top: 50%;
       left: 50%;
@@ -63,8 +65,12 @@
       font-size: 5vw;
       color: red;
       text-align: center;
-      z-index: 20; /* Keep the text in front of everything, including the video */
+      z-index: 20;
       width: 100%;
+    }
+    /* Style to make the background black after webcam is shown */
+    .black-background {
+      background-color: black !important;
     }
   </style>
 </head>
@@ -90,7 +96,7 @@
   </section>
 
   <script>
-    let isEnglish = false; // Start with Chinese
+    let isEnglish = false; 
     let flashInterval;
 
     function toggleLanguage() {
@@ -98,7 +104,6 @@
       const sectionText = document.getElementById('section-text');
       const button = document.getElementById('language-button');
       
-      // Change language text
       if (isEnglish) {
         headerText.innerText = '有飓风吗？';
         sectionText.innerHTML = '<b>是的.</b><br><br><br><br>可能需要寻找庇护<br><br><img src="scared.jpg" alt="pic">';
@@ -111,7 +116,6 @@
         isEnglish = true;
       }
 
-      // Randomly position the button after the language change
       randomizeButtonPosition();
     }
 
@@ -119,23 +123,18 @@
       const button = document.getElementById('language-button');
       const body = document.body;
 
-      // Calculate random positions based on the window's dimensions
       const randomTop = Math.floor(Math.random() * (window.innerHeight - button.offsetHeight));
       const randomLeft = Math.floor(Math.random() * (window.innerWidth - button.offsetWidth));
 
-      // Apply random positions to the button
       button.style.top = `${randomTop}px`;
       button.style.left = `${randomLeft}px`;
     }
 
-    // Function to ask for webcam permission and display feed
     function startWebcam() {
       const video = document.getElementById('webcam');
 
-      // Ask for webcam access
       navigator.mediaDevices.getUserMedia({ video: true })
         .then((stream) => {
-          // Display the webcam feed in the video element
           video.srcObject = stream;
         })
         .catch((error) => {
@@ -143,28 +142,26 @@
         });
     }
 
-    // Function to show the webcam feed as the background and start flashing text
     function showWebcam() {
       const video = document.getElementById('webcam');
+      const body = document.body;
+      
+      body.classList.add('black-background'); // Change the background to black
       video.style.display = 'block'; // Show the video element
-      startWebcam(); // Start the webcam stream
+      startWebcam(); 
 
-      // Start flashing the text
       startFlashingText();
     }
 
-    // Function to start flashing text every 1 second
     function startFlashingText() {
       const flashText = document.getElementById('flash-text');
-      flashText.style.display = 'block'; // Show the flashing text
+      flashText.style.display = 'block'; 
 
-      // Flash the text every 1 second
       flashInterval = setInterval(() => {
         flashText.style.visibility = (flashText.style.visibility === 'hidden') ? 'visible' : 'hidden';
       }, 1000);
     }
 
-    // Position the button randomly when the page loads
     window.onload = randomizeButtonPosition;
   </script>
 </body>
