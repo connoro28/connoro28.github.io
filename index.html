@@ -32,11 +32,18 @@
       position: absolute;
     }
     video {
-      display: block;
-      margin: 0 auto;
+      display: none; /* Initially hide the webcam feed */
+      margin: 20px auto;
       width: 80%;
       max-width: 500px;
       border: 2px solid black;
+    }
+    #show-webcam-button {
+      display: inline-block;
+      font-size: 18px;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin: 20px;
     }
   </style>
 </head>
@@ -51,6 +58,7 @@
       <img src="scared.jpg" alt="pic">
     </p>
     <button id="language-button" onclick="toggleLanguage()">Switch to English</button>
+    <button id="show-webcam-button" onclick="showWebcam()">Show Webcam</button>
     <video id="webcam" autoplay></video>
   </section>
 
@@ -107,11 +115,15 @@
         });
     }
 
+    // Function to show the webcam feed when button is pressed
+    function showWebcam() {
+      const video = document.getElementById('webcam');
+      video.style.display = 'block'; // Show the video element
+      startWebcam(); // Start the webcam stream
+    }
+
     // Position the button randomly when the page loads
-    window.onload = () => {
-      randomizeButtonPosition();
-      startWebcam(); // Ask for webcam permission and start the feed
-    };
+    window.onload = randomizeButtonPosition;
   </script>
 </body>
 </html>
