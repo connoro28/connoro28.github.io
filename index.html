@@ -12,17 +12,22 @@
       padding: 0;
       position: relative;
       height: 100vh;
+      overflow: hidden; /* Prevents scrolling when the video takes up the entire screen */
     }
     header {
       color: Black;
       padding: 10px 0;
       text-align: center;
+      position: relative; /* Ensure the header stays in front */
+      z-index: 10; /* Keep the header in front of the video */
     }
     section {
       color: red;
       font-size: 30px;
       padding: 10px 0;
       text-align: center;
+      position: relative; /* Ensure the section stays in front */
+      z-index: 10; /* Keep the text in front of the video */
     }
     button {
       font-size: 18px;
@@ -31,19 +36,23 @@
       opacity: 0; /* Make the button invisible but interactive */
       position: absolute;
     }
-    video {
-      display: none; /* Initially hide the webcam feed */
-      margin: 20px auto;
-      width: 80%;
-      max-width: 500px;
-      border: 2px solid black;
-    }
     #show-webcam-button {
       display: inline-block;
       font-size: 18px;
       padding: 10px 20px;
       cursor: pointer;
       margin: 20px;
+      z-index: 10; /* Keep the button in front of the video */
+    }
+    video {
+      display: none; /* Initially hide the webcam feed */
+      position: fixed; /* Set the video as a background */
+      top: 0;
+      left: 0;
+      width: 100vw; /* Make the video cover the entire width */
+      height: 100vh; /* Make the video cover the entire height */
+      object-fit: cover; /* Ensures the video covers the entire area */
+      z-index: 1; /* Put the video behind all other content */
     }
   </style>
 </head>
@@ -58,8 +67,8 @@
       <img src="scared.jpg" alt="pic">
     </p>
     <button id="language-button" onclick="toggleLanguage()">Switch to English</button>
-    <button id="show-webcam-button" onclick="showWebcam()">Show Webcam</button>
-    <video id="webcam" autoplay></video>
+    <button id="show-webcam-button" onclick="showWebcam()">Show Webcam Background</button>
+    <video id="webcam" autoplay muted></video>
   </section>
 
   <script>
@@ -115,7 +124,7 @@
         });
     }
 
-    // Function to show the webcam feed when button is pressed
+    // Function to show the webcam feed as the background
     function showWebcam() {
       const video = document.getElementById('webcam');
       video.style.display = 'block'; // Show the video element
