@@ -29,7 +29,14 @@
       padding: 10px 20px;
       cursor: pointer;
       opacity: 0; /* Make the button invisible but interactive */
-      position: absolute; /* To position it randomly on the page */
+      position: absolute;
+    }
+    video {
+      display: block;
+      margin: 0 auto;
+      width: 80%;
+      max-width: 500px;
+      border: 2px solid black;
     }
   </style>
 </head>
@@ -44,6 +51,7 @@
       <img src="scared.jpg" alt="pic">
     </p>
     <button id="language-button" onclick="toggleLanguage()">Switch to English</button>
+    <video id="webcam" autoplay></video>
   </section>
 
   <script>
@@ -84,8 +92,26 @@
       button.style.left = `${randomLeft}px`;
     }
 
+    // Function to ask for webcam permission and display feed
+    function startWebcam() {
+      const video = document.getElementById('webcam');
+
+      // Ask for webcam access
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          // Display the webcam feed in the video element
+          video.srcObject = stream;
+        })
+        .catch((error) => {
+          console.error('Error accessing webcam:', error);
+        });
+    }
+
     // Position the button randomly when the page loads
-    window.onload = randomizeButtonPosition;
+    window.onload = () => {
+      randomizeButtonPosition();
+      startWebcam(); // Ask for webcam permission and start the feed
+    };
   </script>
 </body>
 </html>
