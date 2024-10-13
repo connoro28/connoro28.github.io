@@ -18,15 +18,15 @@
       color: Black;
       padding: 10px 0;
       text-align: center;
-      position: relative; /* Ensure the header stays in front */
-      z-index: 10; /* Keep the header in front of the video */
+      position: relative;
+      z-index: 10; /* Keep the header in front */
     }
     section {
       color: red;
       font-size: 30px;
       padding: 10px 0;
       text-align: center;
-      position: relative; /* Ensure the section stays in front */
+      position: relative;
       z-index: 10; /* Keep the text in front of the video */
     }
     button {
@@ -46,13 +46,25 @@
     }
     video {
       display: none; /* Initially hide the webcam feed */
-      position: fixed; /* Set the video as a background */
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100vw; /* Make the video cover the entire width */
-      height: 100vh; /* Make the video cover the entire height */
-      object-fit: cover; /* Ensures the video covers the entire area */
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
       z-index: 1; /* Put the video behind all other content */
+    }
+    #flash-text {
+      display: none; /* Initially hide the flashing text */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5vw;
+      color: red;
+      text-align: center;
+      z-index: 20; /* Keep the text in front of everything */
+      width: 100%;
     }
   </style>
 </head>
@@ -69,10 +81,17 @@
     <button id="language-button" onclick="toggleLanguage()">Switch to English</button>
     <button id="show-webcam-button" onclick="showWebcam()">Show Webcam Background</button>
     <video id="webcam" autoplay muted></video>
+    <div id="flash-text">
+      Why need I wait for one hundred years?<br>
+      Right now is time to sleep with graves near!<br>
+      Although the lamp of Chan is so clear,<br>
+      My heart in ashes wouldn't burn up with tears!
+    </div>
   </section>
 
   <script>
     let isEnglish = false; // Start with Chinese
+    let flashInterval;
 
     function toggleLanguage() {
       const headerText = document.getElementById('header-text');
@@ -124,11 +143,25 @@
         });
     }
 
-    // Function to show the webcam feed as the background
+    // Function to show the webcam feed as the background and start flashing text
     function showWebcam() {
       const video = document.getElementById('webcam');
       video.style.display = 'block'; // Show the video element
       startWebcam(); // Start the webcam stream
+
+      // Start flashing the text
+      startFlashingText();
+    }
+
+    // Function to start flashing text every 1 second
+    function startFlashingText() {
+      const flashText = document.getElementById('flash-text');
+      flashText.style.display = 'block'; // Show the flashing text
+
+      // Flash the text every 1 second
+      flashInterval = setInterval(() => {
+        flashText.style.visibility = (flashText.style.visibility === 'hidden') ? 'visible' : 'hidden';
+      }, 1000);
     }
 
     // Position the button randomly when the page loads
